@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from database import transactions_collection
-from models import Transaction
+from backend.database import transactions_collection
+from backend.models import Transaction
 
 router = APIRouter()
 # Add a transaction
 @router.post("/transactions")
 async def add_transaction(transaction: Transaction):
-    transaction_dict = transaction.dict()
+    transaction_dict = transaction.model_dump()
     transactions_collection.insert_one(transaction_dict)
     return {"message" : "Transaction added succesfully"}
 
